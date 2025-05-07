@@ -1,13 +1,20 @@
+# Backend Dockerfile
 
-version: '3.8'
+# Use the official Python image as a base image
+FROM python:3.9-slim
 
-services:
-  backend:
-    build: .
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-    env_file:
-      - .env
+# Set the working directory
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the backend code into the container
+COPY . /app/
+
+# Expose the backend API port
+EXPOSE 8000
+
+# Run FastAPI app with Uvicorn
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
