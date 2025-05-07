@@ -1,0 +1,10 @@
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/templates")
+async def get_templates():
+    return [
+        {"id": "react-basic", "name": "React Basic App"},
+        {"id": "html-simple", "name": "Static HTML Site"}
+    ]
